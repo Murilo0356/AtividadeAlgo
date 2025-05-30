@@ -19,7 +19,7 @@ public class Atividade3 {
         }
 
         for (int i = 0; i < num - 1; i++) {
-            for (int j = 0; j < num - i - 1; j++) {
+            for (int j = 0; j < num - 1; j++) {
                 if (vetor[j].compareTo(vetor[j + 1]) > 0) {
                     String aux = vetor[j];
                     vetor[j] = vetor[j + 1];
