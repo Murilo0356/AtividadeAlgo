@@ -1,0 +1,50 @@
+
+package ListaAlgo;
+
+
+import java.util.Scanner;
+
+public class Atividade7 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite a quantidade de jogadores: ");
+        int n = scanner.nextInt();
+
+        int[] pontuacoes = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Digite a pontuação do jogador " + (i + 1) + ": ");
+            pontuacoes[i] = scanner.nextInt();
+        }
+
+        bubbleSortDecrescente(pontuacoes);
+
+        System.out.print("Pontuações Ordenadas: [");
+        for (int i = 0; i < pontuacoes.length; i++) {
+            System.out.print(pontuacoes[i]);
+            if (i != pontuacoes.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+
+        System.out.println("Pontuação Mais Alta: " + pontuacoes[0]);
+
+  
+    }
+
+    public static void bubbleSortDecrescente(int[] vetor) {
+        int tamanho = vetor.length;
+        for (int i = 0; i < tamanho - 1; i++) {
+            for (int j = 0; j < tamanho - 1; j++) {
+                if (vetor[j] < vetor[j + 1]) { 
+                    int aux = vetor[j];
+                    vetor[j] = vetor[j + 1];
+                    vetor[j + 1] = aux;
+                }
+            }
+        }
+    }
+}
