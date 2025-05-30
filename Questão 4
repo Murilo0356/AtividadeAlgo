@@ -1,0 +1,46 @@
+package ListaAlgo;
+
+import java.util.Scanner;
+
+public class Atividade4 {
+	public static void main(String[] args) {
+
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.print("Digite o tamanho do vetor: ");
+		int num = scanner.nextInt();
+		scanner.nextLine();
+
+		int[] vetor = new int[num];
+
+		for (int i = 0; i < num; i++) {
+			System.out.print("Digite o Inteiro " + (i + 1) + ": ");
+			vetor[i] = scanner.nextInt();
+		}
+
+		System.out.println("O vetor deve organizar até qual posição?");
+
+		int posicao = scanner.nextInt();
+
+		if (posicao > num || posicao <= 0) {
+			System.out.println("Posição invalida.");
+		} else {
+			for (int i = 0; i < posicao - 1; i++) {
+				for (int j = 0; j < posicao - 1; j++) {
+					if (vetor[j] > vetor[j + 1]) {
+						int aux = vetor[j];
+						vetor[j] = vetor[j + 1];
+						vetor[j + 1] = aux;
+					}
+				}
+			}
+
+			System.out.print("Vetor resultante: ");
+			for (int i = 0; i < num; i++) {
+				System.out.print(vetor[i] + " ");
+			}
+			System.out.println();
+
+		}
+	}
+}
