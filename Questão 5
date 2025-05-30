@@ -1,0 +1,31 @@
+package ListaAlgo;
+
+public class Atividade5 {
+	public static void main(String[] args) {
+
+		int[][] matriz = { { 3, 2, 1 }, { 6, 5, 4 }, { 9, 8, 7 } };
+
+		int linhas = matriz.length;
+		int colunas = matriz[0].length;
+
+		for (int i = 0; i < linhas; i++) {
+			for (int pass = 0; pass < colunas - 1; pass++) {
+				for (int j = 0; j < colunas - pass - 1; j++) {
+					if (matriz[i][j] > matriz[i][j + 1]) {
+						int aux = matriz[i][j];
+						matriz[i][j] = matriz[i][j + 1];
+						matriz[i][j + 1] = aux;
+					}
+				}
+			}
+		}
+
+		System.out.println("Matriz ordenada:");
+		for (int i = 0; i < linhas; i++) {
+			for (int j = 0; j < colunas; j++) {
+				System.out.print(matriz[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+}
