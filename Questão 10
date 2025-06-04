@@ -5,178 +5,180 @@ import java.util.Arrays;
 
 public class Atividade10 {
 
-    public static void main(String[] args) {
-        int[] tamanhos = {10000, 50000, 100000, 500000};
-        String[] tipos = {"Ordenado", "Invertido", "Aleatório"};
+	public static void main(String[] args) {
+		int[] tamanhos = { 1000, 5000, 10000, 50000 };
 
-        for (int tamanho : tamanhos) {
-            for (String tipo : tipos) {
-                System.out.println("\n=== Vetor " + tipo + " com tamanho " + tamanho + " ===");
-                int[] vetorOriginal = gerarVetor(tamanho, tipo);
+		String[] tipos = { "Ordenado", "Invertido", "Aleatório" };
 
-                testarAlgoritmo("Bubble Sort", vetorOriginal, tamanho);
-                testarAlgoritmo("Selection Sort", vetorOriginal, tamanho);
-                testarAlgoritmo("Insertion Sort", vetorOriginal, tamanho);
-                testarAlgoritmo("Merge Sort", vetorOriginal, tamanho);
-            }
-        }
-    }
+		for (int tamanho : tamanhos) {
+			for (String tipo : tipos) {
+				System.out.println("\n=== Vetor " + tipo + " com tamanho " + tamanho + " ===");
+				int[] vetorOriginal = gerarVetor(tamanho, tipo);
 
-    public static void testarAlgoritmo(String algoritmo, int[] vetorOriginal, int tamanho) {
-        int[] vetor = Arrays.copyOf(vetorOriginal, vetorOriginal.length);
-        long inicio = System.currentTimeMillis();
+				testarAlgoritmo("Bubble Sort", vetorOriginal);
+				testarAlgoritmo("Selection Sort", vetorOriginal);
+				testarAlgoritmo("Insertion Sort", vetorOriginal);
+				testarAlgoritmo("Merge Sort", vetorOriginal);
+			}
+		}
+	}
 
-        Contador contador = new Contador();
+	public static void testarAlgoritmo(String algoritmo, int[] vetorOriginal) {
+		int[] vetor = Arrays.copyOf(vetorOriginal, vetorOriginal.length);
+		long inicio = System.currentTimeMillis();
 
-        switch (algoritmo) {
-            case "Bubble Sort":
-                bubbleSort(vetor, contador);
-                break;
-            case "Selection Sort":
-                selectionSort(vetor, contador);
-                break;
-            case "Insertion Sort":
-                insertionSort(vetor, contador);
-                break;
-            case "Merge Sort":
-                mergeSort(vetor, 0, vetor.length - 1, contador);
-                break;
-        }
+		Contador contador = new Contador();
 
-        long fim = System.currentTimeMillis();
-        long tempo = fim - inicio;
+		switch (algoritmo) {
+		case "Bubble Sort":
+			bubbleSort(vetor, contador);
+			break;
+		case "Selection Sort":
+			selectionSort(vetor, contador);
+			break;
+		case "Insertion Sort":
+			insertionSort(vetor, contador);
+			break;
+		case "Merge Sort":
+			mergeSort(vetor, 0, vetor.length - 1, contador);
+			break;
+		}
 
-        System.out.println(algoritmo + " -> Tempo: " + tempo + " ms | Comparações: " + contador.comparacoes + " | Trocas: " + contador.trocas);
-    }
+		long fim = System.currentTimeMillis();
+		long tempo = fim - inicio;
 
-    public static int[] gerarVetor(int tamanho, String tipo) {
-        int[] vetor = new int[tamanho];
-        Random rand = new Random();
+		System.out.println(algoritmo + " -> Tempo: " + tempo + " ms | Comparações: " + contador.comparacoes
+				+ " | Trocas: " + contador.trocas);
+	}
 
-        if (tipo.equals("Ordenado")) {
-            for (int i = 0; i < tamanho; i++) {
-                vetor[i] = i;
-            }
-        } else if (tipo.equals("Invertido")) {
-            for (int i = 0; i < tamanho; i++) {
-                vetor[i] = tamanho - i;
-            }
-        } else { 
-            for (int i = 0; i < tamanho; i++) {
-                vetor[i] = rand.nextInt(100000);
-            }
-        }
-        return vetor;
-    }
+	public static int[] gerarVetor(int tamanho, String tipo) {
+		int[] vetor = new int[tamanho];
+		Random rand = new Random();
 
-    public static void bubbleSort(int[] vetor, Contador contador) {
-        int n = vetor.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1 - i; j++) {
-                contador.comparacoes++;
-                if (vetor[j] > vetor[j + 1]) {
-                    int aux = vetor[j];
-                    vetor[j] = vetor[j + 1];
-                    vetor[j + 1] = aux;
-                    contador.trocas++;
-                }
-            }
-        }
-    }
+		if (tipo.equals("Ordenado")) {
+			for (int i = 0; i < tamanho; i++) {
+				vetor[i] = i;
+			}
+		} else if (tipo.equals("Invertido")) {
+			for (int i = 0; i < tamanho; i++) {
+				vetor[i] = tamanho - i;
+			}
+		} else {
+			for (int i = 0; i < tamanho; i++) {
+				vetor[i] = rand.nextInt(100000);
+			}
+		}
+		return vetor;
+	}
 
-    public static void selectionSort(int[] vetor, Contador contador) {
-        int n = vetor.length;
-        for (int i = 0; i < n - 1; i++) {
-            int menor = i;
-            for (int j = i + 1; j < n; j++) {
-                contador.comparacoes++;
-                if (vetor[j] < vetor[menor]) {
-                    menor = j;
-                }
-            }
-            if (menor != i) {
-                int aux = vetor[menor];
-                vetor[menor] = vetor[i];
-                vetor[i] = aux;
-                contador.trocas++;
-            }
-        }
-    }
+	public static void bubbleSort(int[] vetor, Contador contador) {
+		int n = vetor.length;
+		for (int i = 0; i < n - 1; i++) {
+			for (int j = 0; j < n - 1 - i; j++) {
+				contador.comparacoes++;
+				if (vetor[j] > vetor[j + 1]) {
+					int aux = vetor[j];
+					vetor[j] = vetor[j + 1];
+					vetor[j + 1] = aux;
+					contador.trocas++;
+				}
+			}
+		}
+	}
 
-    public static void insertionSort(int[] vetor, Contador contador) {
-        int n = vetor.length;
-        for (int i = 1; i < n; i++) {
-            int chave = vetor[i];
-            int j = i - 1;
-            while (j >= 0) {
-                contador.comparacoes++;
-                if (vetor[j] > chave) {
-                    vetor[j + 1] = vetor[j];
-                    j--;
-                    contador.trocas++;
-                } else {
-                    break;
-                }
-            }
-            vetor[j + 1] = chave;
-        }
-    }
+	public static void selectionSort(int[] vetor, Contador contador) {
+		int n = vetor.length;
+		for (int i = 0; i < n - 1; i++) {
+			int menor = i;
+			for (int j = i + 1; j < n; j++) {
+				contador.comparacoes++;
+				if (vetor[j] < vetor[menor]) {
+					menor = j;
+				}
+			}
+			if (menor != i) {
+				int aux = vetor[menor];
+				vetor[menor] = vetor[i];
+				vetor[i] = aux;
+				contador.trocas++;
+			}
+		}
+	}
 
-    public static void mergeSort(int[] vetor, int inicio, int fim, Contador contador) {
-        if (inicio < fim) {
-            int meio = (inicio + fim) / 2;
-            mergeSort(vetor, inicio, meio, contador);
-            mergeSort(vetor, meio + 1, fim, contador);
-            merge(vetor, inicio, meio, fim, contador);
-        }
-    }
+	public static void insertionSort(int[] vetor, Contador contador) {
+		int n = vetor.length;
+		for (int i = 1; i < n; i++) {
+			int chave = vetor[i];
+			int j = i - 1;
+			while (j >= 0) {
+				contador.comparacoes++;
+				if (vetor[j] > chave) {
+					vetor[j + 1] = vetor[j];
+					j--;
+					contador.trocas++;
+				} else {
+					break;
+				}
+			}
+			vetor[j + 1] = chave;
+		}
+	}
 
-    private static void merge(int[] vetor, int inicio, int meio, int fim, Contador contador) {
-        int n1 = meio - inicio + 1;
-        int n2 = fim - meio;
+	public static void mergeSort(int[] vetor, int inicio, int fim, Contador contador) {
+		if (inicio < fim) {
+			int meio = (inicio + fim) / 2;
+			mergeSort(vetor, inicio, meio, contador);
+			mergeSort(vetor, meio + 1, fim, contador);
+			merge(vetor, inicio, meio, fim, contador);
+		}
+	}
 
-        int[] L = new int[n1];
-        int[] R = new int[n2];
+	private static void merge(int[] vetor, int inicio, int meio, int fim, Contador contador) {
+		int n1 = meio - inicio + 1;
+		int n2 = fim - meio;
 
-        for (int i = 0; i < n1; i++) {
-            L[i] = vetor[inicio + i];
-        }
-        for (int j = 0; j < n2; j++) {
-            R[j] = vetor[meio + 1 + j];
-        }
+		int[] L = new int[n1];
+		int[] R = new int[n2];
 
-        int i = 0, j = 0, k = inicio;
+		for (int i = 0; i < n1; i++) {
+			L[i] = vetor[inicio + i];
+		}
+		for (int j = 0; j < n2; j++) {
+			R[j] = vetor[meio + 1 + j];
+		}
 
-        while (i < n1 && j < n2) {
-            contador.comparacoes++;
-            if (L[i] <= R[j]) {
-                vetor[k] = L[i];
-                i++;
-            } else {
-                vetor[k] = R[j];
-                j++;
-            }
-            contador.trocas++;
-            k++;
-        }
+		int i = 0, j = 0, k = inicio;
 
-        while (i < n1) {
-            vetor[k] = L[i];
-            i++;
-            k++;
-            contador.trocas++;
-        }
+		while (i < n1 && j < n2) {
+			contador.comparacoes++;
+			if (L[i] <= R[j]) {
+				vetor[k] = L[i];
+				i++;
+			} else {
+				vetor[k] = R[j];
+				j++;
+			}
+			contador.trocas++;
+			k++;
+		}
 
-        while (j < n2) {
-            vetor[k] = R[j];
-            j++;
-            k++;
-            contador.trocas++;
-        }
-    }
+		while (i < n1) {
+			vetor[k] = L[i];
+			i++;
+			k++;
+			contador.trocas++;
+		}
 
-    static class Contador {
-        long comparacoes = 0;
-        long trocas = 0;
-    }
+		while (j < n2) {
+			vetor[k] = R[j];
+			j++;
+			k++;
+			contador.trocas++;
+		}
+	}
+
+	static class Contador {
+		long comparacoes = 0;
+		long trocas = 0;
+	}
 }
