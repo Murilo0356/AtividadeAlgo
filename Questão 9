@@ -1,0 +1,172 @@
+package ListaAlgo;
+
+import java.util.Random;
+import java.util.Arrays;
+
+public class Atividade9 {
+
+	public static void main(String[] args) {
+		int tamanho = 1000;
+
+		String[] tipos = { "Ordenado", "Invertido", "Aleatório" };
+
+		for (String tipo : tipos) {
+			System.out.println("\n=== Torneio com vetor " + tipo + " ===");
+			int[] vetorOriginal = gerarVetor(tamanho, tipo);
+
+			int[] vetor1 = Arrays.copyOf(vetorOriginal, vetorOriginal.length);
+			int[] vetor2 = Arrays.copyOf(vetorOriginal, vetorOriginal.length);
+			int[] vetor3 = Arrays.copyOf(vetorOriginal, vetorOriginal.length);
+			int[] vetor4 = Arrays.copyOf(vetorOriginal, vetorOriginal.length);
+
+			int inicio = (int) System.nanoTime();
+			bubbleSort(vetor1);
+			int fim = (int) System.nanoTime();
+			int tempoBubble = fim - inicio;
+
+			inicio = (int) System.nanoTime();
+			selectionSort(vetor2);
+			fim = (int) System.nanoTime();
+			int tempoSelection = fim - inicio;
+
+			inicio = (int) System.nanoTime();
+			insertionSort(vetor3);
+			fim = (int) System.nanoTime();
+			int tempoInsertion = fim - inicio;
+
+			inicio = (int) System.nanoTime();
+			mergeSort(vetor4, 0, vetor4.length - 1);
+			fim = (int) System.nanoTime();
+			int tempoMerge = fim - inicio;
+
+			System.out.println("Bubble Sort: " + tempoBubble + " ns");
+			System.out.println("Selection Sort: " + tempoSelection + " ns");
+			System.out.println("Insertion Sort: " + tempoInsertion + " ns");
+			System.out.println("Merge Sort: " + tempoMerge + " ns");
+
+			int[] tempos = { tempoBubble, tempoSelection, tempoInsertion, tempoMerge };
+			String[] nomes = { "Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort" };
+
+			int indiceMaisRapido = 0;
+			for (int i = 1; i < tempos.length; i++) {
+				if (tempos[i] < tempos[indiceMaisRapido]) {
+					indiceMaisRapido = i;
+				}
+			}
+
+			System.out.println(" Algoritmo mais rápido: " + nomes[indiceMaisRapido]);
+		}
+	}
+
+	public static int[] gerarVetor(int tamanho, String tipo) {
+		int[] vetor = new int[tamanho];
+		Random rand = new Random();
+
+		if (tipo.equals("Ordenado")) {
+			for (int i = 0; i < tamanho; i++) {
+				vetor[i] = i;
+			}
+		} else if (tipo.equals("Invertido")) {
+			for (int i = 0; i < tamanho; i++) {
+				vetor[i] = tamanho - i;
+			}
+		} else {
+			for (int i = 0; i < tamanho; i++) {
+				vetor[i] = rand.nextInt(10000);
+			}
+		}
+
+		return vetor;
+	}
+
+	public static void bubbleSort(int[] vetor) {
+		int n = vetor.length;
+		for (int i = 0; i < n - 1; i++) {
+			for (int j = 0; j < n - 1; j++) {
+				if (vetor[j] > vetor[j + 1]) {
+					int aux = vetor[j];
+					vetor[j] = vetor[j + 1];
+					vetor[j + 1] = aux;
+				}
+			}
+		}
+	}
+
+	public static void selectionSort(int[] vetor) {
+		int n = vetor.length;
+		for (int i = 0; i < n - 1; i++) {
+			int menor = i;
+			for (int j = i + 1; j < n; j++) {
+				if (vetor[j] < vetor[menor]) {
+					menor = j;
+				}
+			}
+			int aux = vetor[menor];
+			vetor[menor] = vetor[i];
+			vetor[i] = aux;
+		}
+	}
+
+	public static void insertionSort(int[] vetor) {
+		int n = vetor.length;
+		for (int i = 1; i < n; i++) {
+			int chave = vetor[i];
+			int j = i - 1;
+			while (j >= 0 && vetor[j] > chave) {
+				vetor[j + 1] = vetor[j];
+				j--;
+			}
+			vetor[j + 1] = chave;
+		}
+	}
+
+	public static void mergeSort(int[] vetor, int inicio, int fim) {
+		if (inicio < fim) {
+			int meio = (inicio + fim) / 2;
+			mergeSort(vetor, inicio, meio);
+			mergeSort(vetor, meio + 1, fim);
+			merge(vetor, inicio, meio, fim);
+		}
+	}
+
+	private static void merge(int[] vetor, int inicio, int meio, int fim) {
+		int n1 = meio - inicio + 1;
+		int n2 = fim - meio;
+
+		int[] L = new int[n1];
+		int[] R = new int[n2];
+
+		for (int i = 0; i < n1; i++) {
+			L[i] = vetor[inicio + i];
+		}
+		for (int j = 0; j < n2; j++) {
+			R[j] = vetor[meio + 1 + j];
+		}
+
+		int i = 0, j = 0;
+		int k = inicio;
+
+		while (i < n1 && j < n2) {
+			if (L[i] <= R[j]) {
+				vetor[k] = L[i];
+				i++;
+			} else {
+				vetor[k] = R[j];
+				j++;
+			}
+			k++;
+		}
+
+		while (i < n1) {
+			vetor[k] = L[i];
+			i++;
+			k++;
+		}
+
+		while (j < n2) {
+			vetor[k] = R[j];
+			j++;
+			k++;
+		}
+	}
+}
