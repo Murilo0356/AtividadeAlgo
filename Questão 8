@@ -1,0 +1,57 @@
+package ListaAlgo;
+public class Atividade8 {
+    public static void main(String[] args) {
+    	
+    	        String[] nomes = {"João", "Maria", "Lucas"};
+    	        int[] gravidades = {3, 3, 5};
+    	        int[] tempos = {5, 10, 2};
+
+    	        bubbleSort(nomes, gravidades, tempos);
+
+    	        // Exibe a ordem de atendimento com método imprimirVetor
+    	        System.out.print("Ordem de atendimento: ");
+    	        imprimirVetor(nomes);
+    	    }
+
+    	    public static void bubbleSort(String[] nomes, int[] gravidades, int[] tempos) {
+    	        int n = nomes.length;
+    	        for (int i = 0; i < n - 1; i++) {
+    	            for (int j = 0; j < n - 1 - i; j++) {
+    	                if (precisaTrocar(gravidades[j], tempos[j], gravidades[j + 1], tempos[j + 1])) {
+    	                    
+    	                	// Troca nome
+    	                	String tempNome = nomes[j];
+    	                    nomes[j] = nomes[j + 1];
+    	                    nomes[j + 1] = tempNome;
+    	                    
+    	                    // Troca gravidade
+    	                    int tempGrav = gravidades[j];
+    	                    gravidades[j] = gravidades[j + 1];
+    	                    gravidades[j + 1] = tempGrav;
+
+    	                    // Troca tempo
+    	                    int tempTempo = tempos[j];
+    	                    tempos[j] = tempos[j + 1];
+    	                    tempos[j + 1] = tempTempo;
+    	                }
+    	            }
+    	        }
+    	    }
+
+    	    public static boolean precisaTrocar(int grav1, int tempo1, int grav2, int tempo2) {
+    	        if (grav1 < grav2) {
+    	            return true;
+    	        } else if (grav1 == grav2) {
+    	            return tempo1 < tempo2;
+    	        } else {
+    	            return false;
+    	        }
+    	    }
+
+    	    public static void imprimirVetor(String[] vetor) {
+    	        for (int i = 0; i < vetor.length; i++) {
+    	            System.out.print(vetor[i] + " ");
+    	        }
+    	        System.out.println();
+    	    }
+}
