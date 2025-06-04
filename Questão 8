@@ -8,7 +8,6 @@ public class Atividade8 {
 
     	        bubbleSort(nomes, gravidades, tempos);
 
-    	        // Exibe a ordem de atendimento com método imprimirVetor
     	        System.out.print("Ordem de atendimento: ");
     	        imprimirVetor(nomes);
     	    }
